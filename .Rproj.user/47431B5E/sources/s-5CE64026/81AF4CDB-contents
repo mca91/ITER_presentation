@@ -1,0 +1,523 @@
+---
+title: "Reproducible Research in der ökonometrischen Grundausbildung"
+author: "Christoph Hanck <br><h4>christoph.hanck@uni-due.de <br><br> Universität Duisburg-Essen <br> Fakultät für Wirtschaftswissenschaften <br> Lehrstuhl für Ökonometrie</h4>"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: 
+      - "default"
+      - "assets/sydney-fonts.css"
+      - "assets/sydney.css"
+      - "assets/title_slides.css"
+      - "xaringan_files/custom.css"
+    self_contained: false # if true, fonts will be stored locally
+    seal: false # show a title slide with YAML information
+    includes:
+      in_header: 
+        - "assets/mathjax-equation-numbers.html"
+        - "assets/datacamplight.html"
+    nature:
+      beforeInit:
+        - "assets/remark-zoom.js"
+        - "xaringan_files/macros.js"
+        - "https://platform.twitter.com/widgets.js"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9'
+      navigation:
+        scroll: false # disable slide transitions by scrolling
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+options(htmltools.dir.version = FALSE)
+
+# for generating citations and references from bib file
+library(RefManageR)
+BibOptions(
+  check.entries = FALSE, 
+  bib.style = "authoryear", 
+  cite.style = "authoryear", 
+  style = "markdown",
+  hyperlink = FALSE, 
+  dashed = FALSE)
+lib <- ReadBib("assets/lib.bib")
+```
+
+class: title-slide title-iter center middle
+
+# `r rmarkdown::metadata$title`
+## `r rmarkdown::metadata$subtitle`
+### `r rmarkdown::metadata$author`
+#### `r rmarkdown::metadata$affiliation`
+
+---
+## Outline
+
+- Einführung
+  - Förderung
+  - Über Ökonometrie
+  - Die Lehrveranstaltung
+  - R
+  
+- Projekt *Introduction to Econometrics with R*
+
+- Anwendungsbeispiele
+
+---
+## Förderung
+
+![:image 80%](assets/Projektseite.png)
+
+.pull-left[
+  <br>
+ ![:image 40%](assets/sv.svg)
+]
+
+.pull-right[
+  <br>
+  <br>
+  ![:image 70%](assets/MIWF.png)
+]
+
+---
+## Was ist Ökonometrie?
+
+<br>
+
+![:image 80%](assets/wordcloud.png)
+
+---
+## Was ist Ökonometrie?
+
+<br>
+<br>
+
+Beispiele:
+
+* *Wie stark* beeinflusst das Wirtschaftswachstum die Arbeitslosigkeit einer Volkswirtschaft?
+
+* *Wie groß* ist der Effekt einer Erhöhung des Leitzinses durch die EZB auf die Kerninflation in der Eurozone?
+
+* *Wie stark* ließe sich die Kriminalitätsrate in Berlin senken, wenn eine zusätzliche Million Euro für  Video-Überwachung im öffentlichen Raum ausgegeben würde?  
+
+<br>
+
+$\Rightarrow$ Empirische Methodenkompetenz (*ökonometrische Software*) ist von zentraler Bedeutung für die Ausbildung.
+
+---
+## Lehrveranstaltung
+
+<br>
+
+.pull-left[
+
+- *Einführung in die Ökonometrie* mit 6 ECTS in Bachelorstudiengängen VWL, WiInf, WiMathe und LA, etwa 120 Studierende
+
+- Pflichtveranstaltung des VWL-Curriculums, aufbauend auf Grundkenntnissen in deskriptiver und induktiver Statistik (2 Module à 6 ECTS)
+
+- Orientierung an *Introduction to Econometrics* von `r Cite(lib, 'StockWatson2015')`
+
+- (Ein) zentrales Thema: Lineare Regression mit Methode der kleinsten Quadrate
+
+]
+
+.pull-right[
+  <br>
+  ![:image 50%](assets/swcover.jpg)
+]
+
+---
+## Lehrveranstaltung
+
+Relevanz:
+
+- Kurzfristig: maßgeblich für Qualität (computergestützter) empirischer Analysen in Seminar- und Abschlussarbeiten
+
+- Mittelfristig: wichtig für die Berufspraxis
+
+
+Bisherige Organisation:
+
+- Vorlesung (2 SWS) 
+    
+- ~10 begleitende theoretische und ~5 Computer-Übungen mit dem Software-Paket R zu Einzelterminen (2 SWS)
+
+- Moodle-Kurs
+
+- Abschließende Klausur (Papier und Computer)
+
+---
+## Warum R?
+
+<br>
+
+.pull-left[
+  ![:image 90%](assets/industrytraffic.png)
+]
+
+.pull-right[
+  [Popularität von R](https://stackoverflow.blog/2017/10/10/impressive-growth-r/)  
+
+  [Unternehmen, die R nutzen](http://www.listendata.com/2016/12/companies-using-r.html)
+
+  [kdnuggets-Umfrage](https://www.kdnuggets.com/2016/06/r-python-top-analytics-data-mining-data-science-software.html)
+]
+
+---
+## Warum R?
+
+.pull-right[
+  ![:image 30%](assets/Rlogo 2.png)
+]
+
+<br><br>
+
+- Objektorientierte Programmiersprache
+- Open source &mdash; keine Kosten oder Lizenzen
+- Bereitgestellt für alle gängigen Betriebssysteme
+- Vielzahl an graphischen Arbeitsumgebungen (meist kostenlos), beispielweise *RStudio*
+- Exponentiell wachsende Anzahl an frei verfügbaren Programmbibliotheken (packages), bereitgestellt durch interdisziplinäre wissenschaftliche Community 
+---
+## Warum R?
+
+![:image 65%](assets/language_ranking.png)
+![:source_url](https://redmonk.com/sogrady/2019/07/18/language-rankings-6-19/)
+
+---
+## Problemstellung im Umgang mit R
+
+<br>
+
+![:image 75%](assets/RGUI.png)
+
+---
+## Problemstellung im Umgang mit R
+
+- Herausforderungen: 
+
+    * Oftmals Erstkontakt mit einer Programmiersprache
+    * Vergleichsweise steile Lernkurve bei autodidaktischer Erarbeitung mit Lehrbüchern 
+    * Wahrnehmung von R als "zusätzliche" Belastung neben dem theoretischen Teil der Veranstaltung
+
+<br>
+
+- Bisher: überwiegend Frontalunterricht
+
+    * Fokussierung bei Klausurvorbereitung auf Theorie seitens der Studierenden
+    * Studierende erscheinen unvorbereitet zu den Einzelterminen der Computer-Übung
+    * Mangels Vorkenntnissen in R können Problemstellungen oft nicht eigenständig erarbeitet werden
+    * Didaktisch sinnvolle Kleingruppenarbeit ist personell nicht realisierbar (~120 Teilnehmer)
+
+---
+## Das Projekt
+
+**Ziel:**
+
+Stärkung studentischer Kompetenzen in der Nutzung der Software R durch eine didaktische Neuorganisation des Moduls *Einführung in die Ökonometrie*.
+
+Erstellung digitaler Lehrmaterialien für ein online-gestütztes Selbststudium:
+
+* Online-Companion *Introduction to Econometrics with R* 
+
+* Interaktivee Übungsaufgaben und Visualisierungen als Brücke zwischen abstraktem Methodenwissen und dessen Anwendung in R
+
+---
+## Das Projekt
+
+Außerdem:
+
+* Integration eines inverted-classroom-Konzepts in den Präsenzteil des Übungsbetriebs
+
+    * Fragerunden
+    * Gruppenarbeiten
+    * Präsentation erarbeiteter Lösungen zu Programmieraufgaben (Bonuspunkte)
+<br>    
+* Aufhebung der Trennung zwischen Theorie- und Computer-Übungen <br>
+    $\rightarrow$ Programmier(teil)aufgaben als integrierter, didaktisch wertvoller Bestandteil *jeder* Präsenzübung
+<br><br>
+* Entsprechende Ausrichtung der Abschlussklausur als Computer-Klausur mit maßgeblichem <tt>R</tt>-Anteil
+
+---
+class: segue-red
+### Introduction to Econometrics with R (ITER)
+
+[www.econometrics-with-r.org](https://www.econometrics-with-r.org)
+
+---
+## ITER &mdash; Konzept
+
+- Enge Orientierung an Lehrbuch und Vorlesungsskript
+- Nutzung von Synergie-Effekten beim Erarbeiten von Theorie und deren Anwendung in R
+- Empirische Gewichtung: 
+
+    $\rightarrow$ *Reproduktion* von behandelten Studien mit den verwendeten Datensätzen in <tt>R</tt> <br><br>
+    $\rightarrow$ Kontinuierlicher *Transfer* zwischen mathematischer Formulierung von Modellen und deren Umsetzung in <tt>R</tt>
+    
+- Visualisierung komplexerer, theoretischer Resultate mit interaktiven Animationen
+- Anwendungsbezogene Validierung von Key Concepts mittels einfacher Simulationen in <tt>R</tt> 
+- Webbasierte <tt>R</tt>-Aufgaben mit automatischem Feedback zur Klausurvorbereitung
+
+---
+## ITER &mdash; Umsetzung
+
+.pull-left[
+  .center_heading[
+      <h4>Reproducible Reporting mit rmarkdown</h4>
+  ]
+  ![:image 75%](assets/RMarkdownOutputFormats.png)
+]
+
+.pull-right[
+
+.center_heading[
+<h4> Interaktivität durch D3.js und DataCamp </h4>
+]
+
+.pull-left[
+  ![:image 60%](assets/D3.png)
+]
+
+.pull-right[
+  ![:image 60%](assets/DataCamp.png)
+]
+
+.center_heading[
+  <h4>Version Control und Hosting @ Github</h4>
+]
+  ![:image 30%](assets/GitHub.png)
+]
+
+---
+## 1. Beispiel: Einfache Regression &mdash; Parameterschätzung
+
+Modellgleichung:
+
+$$ Y_i = \beta_0 + \beta_1 \cdot X_i + u_i $$
+
+Die Koeffizienten $\beta_0$ und $\beta_1$ sind unbekannt $\rightarrow$ Die Methode der kleinsten Quadrate liefert Koeffizientenschätzer $\widehat{\beta}_0$ und $\widehat{\beta}_1$:
+
+$$\widehat{\beta}_1 = \frac{ \sum_{i = 1}^n (X_i - \bar{X})(Y_i - \bar{Y}) }{ \sum_{i=1}^n (X_i -   \bar{X})^2}$$ 
+
+$$ \widehat{\beta}_0 =  \bar{Y} - \widehat{\beta}_1 \bar{X} $$
+
+---
+## 1. Beispiel: Einfache Regression &mdash; Fallbeispiel
+
+![:image 60%](assets/TestScoreClassSize.png)
+
+**Fragestellung**
+
+Gibt es einen kausalen Zusammenhang zwischen der Klassengröße (Student-Teacher Ratio) und dem Lernerfolg kalifornischer Schüler (Test Score)?
+
+---
+## 1. Beispiel: Einfache Regression &mdash; Ansatz im Lehrbuch
+
+Das Lehrbuch beginnt mit einem *einfachen linearen Regressionsmodell*, $$TestScore = \beta_0 + \beta_1 \times ClassSize + u, \tag{1}$$ und präsentiert das Ergebnis der Schätzung (*Regressionsoutput*).
+
+<br>
+
+![:image 65%](assets/RegOutput.png)
+
+---
+class: sydney-orange
+## 1. Beispiel: Einfache Regression &mdash; Ansatz in ITER
+
+Zunächst: Aufarbeitung der Theorie unterstützt durch interaktive Applikationen.
+
+<br>
+
+<iframe height="100%" width="100%" frameborder="0" scrolling="no" src="SimpleRegression.html" style="border:none;padding-left:15%"></iframe>
+
+---
+## 1. Beispiel: Einfache Regression &mdash; Ansatz in ITER
+
+Schrittweise Erläuterung, wie R genutzt werden kann, um 
+
+* die benötigten Daten einzuelesen und vorzubereiten  
+
+* das Modell zu schätzen  
+
+* einen derartigen Regressionsoutput zu erzeugen und zu interpretieren  
+
+* weitergehende Fragestellungen zu erarbeiten und das Modell anzupassen
+
+Darauf aufbauend:
+
+- Transferaufgaben 
+- interaktive Übungsaufgaben im Online-Skript
+
+---
+class: segue-red
+
+<a href="https://www.econometrics-with-r.org/lrwor.html#estimating-the-coefficients-of-the-linear-regression-model">Einfache Regression in ITER</a>
+
+---
+## 2. Beispiel: Schwaches Gesetz der großen Zahlen (WLLN)
+
+.medium[
+WLLN ist grundlegendes Theorem für Schätzung von Regressionsmodellen wie $(1)$. Erfahrungsgemäß sind solche Konzepte schwer zugänglich.
+
+.blockquote.exercise[
+#### Beispiel: Münzwurf 
+
+$Y_i$ ist Ergebnis eines Münzwürfs, d.h. 
+\begin{align*}
+  P(Y_i) = \begin{cases} 0.5, \ \ \ \text{für} & Y_i = 1 \\ 0.5, \ \ \ \text{für} & Y_i = 0 \end{cases}
+\end{align*}
+und damit $E(Y_i)=0.5$ (Erwartungswert).
+
+WLLN besagt, dass das Stichprobenmittel von $n$ Würfen, $$\overline{Y}_n = \frac{1}{n} \sum_{i=1}^{n} Y_i,$$ in Wahrscheinlichkeit gegen ihren Erwartungswert $E(Y_i)=0.5$ konvergiert:
+
+$$\lim_{n \rightarrow \infty} P(\lvert\overline{Y}_n-E(Y_i)\rvert\geq \epsilon) = 0 \ \ , \ \ \forall \epsilon > 0$$
+]]
+
+---
+## 2. Beispiel &mdash; Implementierung in R
+
+.smaller[
+
+```{r, eval=F, echo=T, cache=TRUE, fig.align='center', fig.height=4}
+# Set number of coin tosses and sample observations
+N <- 30000
+Y <- sample(0:1, N, replace =T)
+
+# Calculate R_n for 1:N
+S <- cumsum(Y)
+R <- S/(1:N)
+
+# Plot the path
+plot(R, 
+     ylim=c(0.3, 0.7), 
+     type = "l", 
+     col = "steelblue", 
+     lwd = 2, 
+     xlab = "n", 
+     ylab = "R_n")
+
+# Add a dashed line for E(y_i) = 0.5
+lines(c(0, N),
+      c(0.5, 0.5), 
+      col = "darkred", 
+      lty = 2, 
+      lwd = 1)
+```
+
+]
+
+---
+## 2. Beispiel &mdash; Implementierung in R
+
+```{r, eval=T, echo=F, cache=TRUE, fig.align='center', out.width='50%', dpi=200}
+# Set number of coin tosses and simulate
+N <- 30000
+Y <- sample(0:1, N, replace =T)
+
+# Calculate R_n for 1:N
+S <- cumsum(Y)
+R <- S/(1:N)
+
+# Plot the path
+plot(R, ylim=c(0.3, 0.7), type = "l", col = "steelblue", lwd = 2, xlab = "n", ylab = "R_n")
+
+# Add a dashed line for R_n = 0.5
+lines(c(0,N), c(0.5, 0.5), col = "darkred", lty = 2, lwd = 1)
+```
+
+---
+class: sydney-orange
+## 2. Beispiel &mdash; Interaktive D3.js Visualisierung
+
+<iframe height="100%" width="100%" frameborder="0" scrolling="no" src="CoinTossingWLLN.html" style="border:none;padding-left:15%"></iframe>
+
+---
+## 2. Beispiel &mdash; Interaktive R Aufgabe (Skript)
+
+.smaller[
+.blockquote.exercise[
+#### Exercise: WLLN
+
+Recall the weak law of large numbers (WLLN):
+
+$$\lim_{n \rightarrow \infty} P(\lvert\overline{Y}_n-E(Y_i)\rvert\geq \epsilon) = 0 \ \ , \ \ \forall \epsilon > 0 \ \ \ \text{when} \ \ \ \overline{Y}_n = \frac{1}{n} \sum_{i=1}^{n} Y_i \ \ \ , \ \ \ Y_i \overset{i.i.d.}{\sim} \left[ \mu,\sigma^2_Y \right]$$
+
+Now let $$P(Y_i) = \begin{cases} 0.5, \ \ \ \text{for} & Y_i = 1, \\ 0.5, \ \ \ \text{for} & Y_i = 0. \end{cases}$$
+
+##### Instructions
+
+- Use R to sample observations $Y_i$, $i=1,\dots,30000$. Store them in a vector named `Y`. *Hint*: the function `sample()` may be helpful, see `?sample`.
+
+- Compute the cumulative averages of the observations in the vector `Y` and store the result in R
+]]
+
+---
+## 2. Beispiel &mdash; Interaktive R Aufgabe (Skript)
+
+<br>
+<br>
+<div data-datacamp-exercise data-lang="r">
+	<code data-type="pre-exercise-code">
+	</code>
+	<code data-type="sample-code">
+# The following code samples N observations of Y
+N <- 30000
+Y <- sample(0:1, N, replace = T)
+
+# Please compute the cumulative averages of the Y_i
+R <- ???
+    
+	</code>
+	<code data-type="solution">
+# The following code samples N observations
+N <- 30000
+Y <- sample(0:1, N, replace = T)
+
+# Please compute the cumulative average of the observations
+R <- 1/(1:N)*cumsum(Y)
+      
+	</code>
+	<code data-type="sct">
+	  test_or(
+	  test_function("cumsum",
+	                args="x",
+	                not_called_msg = "Recall that we seek the average at any point!",
+	                incorrect_msg = "Argument x in Your call of cumsum() is wrong!"
+	                ),
+		test_object("R", eq_condition="equivalent")
+	  )
+		
+	</code>
+	<div data-type="hint">
+	  The cumulative sum of a vector <code>X</code> can be computed by <code>cumsum(X)</code>.
+	</div>
+</div>
+
+---
+## 3. Beispiel &mdash; Key Concept
+
+<br>
+![:image 80%](assets/keyconcept.png)
+
+---
+class: sydney-orange
+## 3. Beispiel &mdash; Key Concept: Interaktive Simulation
+
+#### Verteilung von $\widehat{\beta}_1$ für Stichproben mit $n=200$
+
+<iframe height="100%" width="100%" frameborder="0" scrolling="no" src="smallSampleDistReg.html" style="border:none;padding-left:15%"></iframe>
+
+---
+class: segue-red
+
+Vielen Dank für Ihre Aufmerksamkeit!
+
+---
+## Quellen
+
+```{r, echo=F, results='asis'}
+PrintBibliography(lib)
+```
+
+
+
