@@ -3,7 +3,7 @@
   <head>
     <title>Reproducible Research in der ökonometrischen Grundausbildung</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2019-11-05" />
+    <meta name="date" content="2019-11-06" />
     <link href="index_files/remark-css/default.css" rel="stylesheet" />
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
@@ -425,44 +425,7 @@ Now let `$$P(Y_i) = \begin{cases} 0.5, \ \ \ \text{for} &amp; Y_i = 1, \\ 0.5, \
 ---
 ## 2. Beispiel &amp;mdash; Interaktive R Aufgabe (Skript)
 
-&lt;br&gt;
-&lt;br&gt;
-&lt;div data-datacamp-exercise data-lang="r"&gt;
-	&lt;code data-type="pre-exercise-code"&gt;
-	&lt;/code&gt;
-	&lt;code data-type="sample-code"&gt;
-# The following code samples N observations of Y
-N &lt;- 30000
-Y &lt;- sample(0:1, N, replace = T)
-
-# Please compute the cumulative averages of the Y_i
-R &lt;- ???
-    
-	&lt;/code&gt;
-	&lt;code data-type="solution"&gt;
-# The following code samples N observations
-N &lt;- 30000
-Y &lt;- sample(0:1, N, replace = T)
-
-# Please compute the cumulative average of the observations
-R &lt;- 1/(1:N)*cumsum(Y)
-      
-	&lt;/code&gt;
-	&lt;code data-type="sct"&gt;
-	  test_or(
-	  test_function("cumsum",
-	                args="x",
-	                not_called_msg = "Recall that we seek the average at any point!",
-	                incorrect_msg = "Argument x in Your call of cumsum() is wrong!"
-	                ),
-		test_object("R", eq_condition="equivalent")
-	  )
-		
-	&lt;/code&gt;
-	&lt;div data-type="hint"&gt;
-	  The cumulative sum of a vector &lt;code&gt;X&lt;/code&gt; can be computed by &lt;code&gt;cumsum(X)&lt;/code&gt;.
-	&lt;/div&gt;
-&lt;/div&gt;
+&lt;iframe src="assets/dcexercise.html" width="100%" height="500" scrolling="no" seamless="seamless" frameBorder="0"&gt; &lt;/iframe&gt;
 
 ---
 ## 3. Beispiel &amp;mdash; Key Concept

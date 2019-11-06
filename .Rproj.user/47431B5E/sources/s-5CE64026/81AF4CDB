@@ -5,13 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "1303822329",
+    "hash" : "392752598",
     "id" : "81AF4CDB",
-    "lastKnownWriteTime" : 1572947899,
-    "last_content_update" : 1572947899,
+    "lastKnownWriteTime" : 1573034685,
+    "last_content_update" : 1573034685014,
     "path" : "~/Dropbox/Christop_xaringan/index.Rmd",
     "project_path" : "index.Rmd",
     "properties" : {
+        "cursorPosition" : "457,124",
+        "scrollLine" : "455"
     },
     "read_only" : false,
     "read_only_alternatives" : [

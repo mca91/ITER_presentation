@@ -30,6 +30,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
+tutorial::go_interactive(greedy = FALSE)
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 options(htmltools.dir.version = FALSE)
 
@@ -454,44 +455,7 @@ Now let $$P(Y_i) = \begin{cases} 0.5, \ \ \ \text{for} & Y_i = 1, \\ 0.5, \ \ \ 
 ---
 ## 2. Beispiel &mdash; Interaktive R Aufgabe (Skript)
 
-<br>
-<br>
-<div data-datacamp-exercise data-lang="r">
-	<code data-type="pre-exercise-code">
-	</code>
-	<code data-type="sample-code">
-# The following code samples N observations of Y
-N <- 30000
-Y <- sample(0:1, N, replace = T)
-
-# Please compute the cumulative averages of the Y_i
-R <- ???
-    
-	</code>
-	<code data-type="solution">
-# The following code samples N observations
-N <- 30000
-Y <- sample(0:1, N, replace = T)
-
-# Please compute the cumulative average of the observations
-R <- 1/(1:N)*cumsum(Y)
-      
-	</code>
-	<code data-type="sct">
-	  test_or(
-	  test_function("cumsum",
-	                args="x",
-	                not_called_msg = "Recall that we seek the average at any point!",
-	                incorrect_msg = "Argument x in Your call of cumsum() is wrong!"
-	                ),
-		test_object("R", eq_condition="equivalent")
-	  )
-		
-	</code>
-	<div data-type="hint">
-	  The cumulative sum of a vector <code>X</code> can be computed by <code>cumsum(X)</code>.
-	</div>
-</div>
+<iframe src="assets/dcexercise.html" width="100%" height="500" scrolling="no" seamless="seamless" frameBorder="0"> </iframe>
 
 ---
 ## 3. Beispiel &mdash; Key Concept
@@ -518,6 +482,10 @@ Vielen Dank für Ihre Aufmerksamkeit!
 ```{r, echo=F, results='asis'}
 PrintBibliography(lib)
 ```
+
+
+
+
 
 
 
